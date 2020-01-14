@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TvMazeScraper", "TvMazeScraper\TvMazeScraper.csproj", "{6DAFD18A-85F1-4DC6-9373-867EFF425CD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TvMazeScraper.Api", "TvMazeScraper.Api\TvMazeScraper.Api.csproj", "{6DAFD18A-85F1-4DC6-9373-867EFF425CD0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TvMaze.Connector", "TvMaze.Connector\TvMaze.Connector.csproj", "{D1EA0891-9208-4FD1-B06F-42FF5C85B824}"
 EndProject
