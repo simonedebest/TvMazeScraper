@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using TvMaze.Connector;
 using TvMazeScraper.Entities;
 using TvMazeScraper.Models;
+using TvMazeScraper.Pagination;
 
 namespace TvMazeScraper.Services
 {
@@ -23,19 +24,23 @@ namespace TvMazeScraper.Services
             _dbContext = dbContext;
         }
 
-        public async Task<List<Models.Show>> GetAsync()
+        public async Task<List<Show>> GetAsync(PaginationParameters paginationParameters)
         {
             await Update();
-            var result = GetTvShowsWithCastAsync();
+            var result = GetTvShowsWithCastAsync(paginationParameters);
             
             return result;
         }
 
-        private List<Show> GetTvShowsWithCastAsync()
+        private List<Show> GetTvShowsWithCastAsync(PaginationParameters paginationParameters)
         {
             var dbShows =  _dbContext.Shows.Include(show => show.Cast).ToList();
-            var result = _mapper.Map<List<Models.Show>>(dbShows);
-            return result;
+            var shows = _mapper.Map<List<Models.Show>>(dbShows);
+            
+            var pagedShowsList =
+                PagedList<Show>.ToPagedList(shows, paginationParameters.PageNumber, paginationParameters.PageSize);
+            
+            return pagedShowsList;
         }
         public async Task Update()
         {
