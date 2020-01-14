@@ -6,10 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using TvMaze.Connector.Configuration;
 using TvMaze.Connector.Extensions;
 using TvMazeScraper.Entities;
 using TvMazeScraper.Mappers;
 using TvMazeScraper.Services;
+using TvMazeScraper.Core.MiddleWare.ExceptionMiddleware;
 
 namespace TvMazeScraper
 {
@@ -26,17 +28,16 @@ namespace TvMazeScraper
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<ITvMazeService, TvMazeService>();
+            services.AddTransient<ITvMazeService, TvMazeService>();
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddTvMazeServices(Configuration);
-            
-            
+
             var connectionString = Configuration.GetConnectionString("TvMazeDatabase");
             services.AddEntityFrameworkNpgsql()
-                .AddDbContext<ApiDbContext>(o => o.UseNpgsql(connectionString))
-                .BuildServiceProvider();
-            services.AddScoped<ApiDbContext>();
-            
+                .AddDbContext<ApiDbContext>(o => o.UseNpgsql(connectionString));
+
+            services.Configure<TvMazeOptions>(Configuration.GetSection(nameof(TvMazeOptions)));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +47,8 @@ namespace TvMazeScraper
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseHttpsRedirection();
 

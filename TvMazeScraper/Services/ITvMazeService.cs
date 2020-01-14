@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TvMazeScraper.Models;
 using TvMazeScraper.Pagination;
-using Show = TvMazeScraper.Models.Show;
+
 
 namespace TvMazeScraper.Services
 {

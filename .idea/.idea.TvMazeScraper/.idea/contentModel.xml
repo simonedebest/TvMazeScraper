@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="0-Framework" t="Include" />
+      <e p="1-Connectors" t="Include" />
+      <e p="2-Hosts" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="TvMaze.Connector" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
@@ -92,6 +95,26 @@
         </e>
         <e p="Startup.cs" t="Include" />
         <e p="TvMazeScraper.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="TvMazeScraper.Core" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Exceptions" t="Include">
+          <e p="baseException.cs" t="Include" />
+        </e>
+        <e p="Middleware" t="Include">
+          <e p="ExceptionMiddleWare.cs" t="Include" />
+        </e>
+        <e p="Model" t="Include">
+          <e p="ErrorDetailsModel.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="TvMazeScraper.Core.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="TvMazeScraper.Core.csproj" t="IncludeRecursive" />
       </e>
       <e p="TvMazeScraper.sln" t="IncludeFlat" />
     </e>

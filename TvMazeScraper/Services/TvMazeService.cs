@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using TvMaze.Connector;
-using TvMazeScraper.Entities;
 using TvMazeScraper.Models;
+using TvMazeScraper.Entities;
 using TvMazeScraper.Pagination;
 
 namespace TvMazeScraper.Services
@@ -26,44 +26,45 @@ namespace TvMazeScraper.Services
 
         public async Task<List<Show>> GetAsync(PaginationParameters paginationParameters)
         {
-            await Update();
-            var result = GetTvShowsWithCastAsync(paginationParameters);
+            await UpdateAsync();
+            var result =  GetTvShowsWithCast(paginationParameters);
             
             return result;
         }
 
-        private List<Show> GetTvShowsWithCastAsync(PaginationParameters paginationParameters)
+        private List<Show> GetTvShowsWithCast(PaginationParameters paginationParameters)
         {
             var dbShows =  _dbContext.Shows.Include(show => show.Cast).ToList();
-            var shows = _mapper.Map<List<Models.Show>>(dbShows);
+            var shows = _mapper.Map<List<Show>>(dbShows);
             
             var pagedShowsList =
                 PagedList<Show>.ToPagedList(shows, paginationParameters.PageNumber, paginationParameters.PageSize);
             
             return pagedShowsList;
         }
-        public async Task Update()
+        
+        public async Task UpdateAsync()
         {
             var scrapedShows = await _tvMazeConnector.GetShowsAsync();
             var showList = _mapper.Map<List<Show>>(scrapedShows);
 
-            var dbShowList = await SaveShows(showList);
+            var dbShowList = await SaveShowsAsync(showList);
 
             foreach (var show in dbShowList)
             {
-                var castMembers = await GetTranslatedCastMembersForShow(show.Id);
+                var castMembers = await GetTranslatedCastMembersForShowAsync(show.Id);
                 await SaveCastMembersAsync(castMembers, show.Id);
             }
         }
 
-        private async Task<List<CastMember>> GetTranslatedCastMembersForShow(int showId)
+        private async Task<List<CastMember>> GetTranslatedCastMembersForShowAsync(int showId)
         {
             var scrapedCastMembersForShow = await _tvMazeConnector.GetCastMembersForShowAsync(showId);
             var castMemberList = _mapper.Map<List<CastMember>>(scrapedCastMembersForShow);
             return castMemberList;
         }
 
-        private async Task<List<ShowEntity>> SaveShows(List<Models.Show> shows)
+        private async Task<List<ShowEntity>> SaveShowsAsync(List<Show> shows)
         {
             var dbShowList = new List<ShowEntity>();
             foreach (var show in shows)
@@ -75,17 +76,16 @@ namespace TvMazeScraper.Services
                 }
                 else
                 {
-                    var showToAdd = new ShowEntity();
-                    showToAdd.ShowId = show.Id;
-                    showToAdd.Name = show.Name;
-                    showToAdd.CreatedAt = DateTime.UtcNow;
-                    await _dbContext.AddAsync(showToAdd);
+                    dbShow = new ShowEntity();
+                    dbShow.ShowId = show.Id;
+                    dbShow.Name = show.Name;
+                    dbShow.CreatedAt = DateTime.UtcNow;
+                    await _dbContext.AddAsync(dbShow);
                 }
-                await _dbContext.SaveChangesAsync();
-                
                 dbShowList.Add(dbShow);
             }
-
+            
+            await _dbContext.SaveChangesAsync();
             return dbShowList;
         }
 
@@ -101,16 +101,16 @@ namespace TvMazeScraper.Services
                 }
                 else
                 {
-                    var castMemberToAdd = new CastMemberEntity();
-                    castMemberToAdd.CastMemberId = castMember.Id;
-                    castMemberToAdd.ShowEntityId = showId;
-                    castMemberToAdd.Name = castMember.Name;
-                    castMemberToAdd.Birthday = castMember.Birthday;
-                    castMemberToAdd.CreatedAt = DateTime.UtcNow;
-                    await _dbContext.AddAsync(castMemberToAdd);
+                    dbCastMember = new CastMemberEntity();
+                    dbCastMember.CastMemberId = castMember.Id;
+                    dbCastMember.ShowEntityId = showId;
+                    dbCastMember.Name = castMember.Name;
+                    dbCastMember.Birthday = castMember.Birthday;
+                    dbCastMember.CreatedAt = DateTime.UtcNow;
+                    await _dbContext.AddAsync(dbCastMember);
                 }
-                await _dbContext.SaveChangesAsync();
             }
+            await _dbContext.SaveChangesAsync();
         }
         
         private void UpdateCastMember(CastMemberEntity dbCastMemberEntity, CastMember castMember)
@@ -127,6 +127,5 @@ namespace TvMazeScraper.Services
             dbShow.ModifiedAt = DateTime.UtcNow;
             _dbContext.Update(dbShow);
         }
-        
     }
 }

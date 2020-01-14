@@ -9,8 +9,6 @@ using TvMaze.Connector.Configuration;
     {
         public static void AddTvMazeServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddHttpClient();
-
             var options = configuration.GetSection(nameof(TvMazeOptions)).Get<TvMazeOptions>();
             services.AddHttpClient<ITvMazeConnector, TvMazeConnector>(client =>
             {
