@@ -1,4 +1,3 @@
-using System.Linq;
 using AutoMapper;
 using TvMazeScraper.Entities;
 using CastMember = TvMaze.Connector.Models.CastMember.CastMember;

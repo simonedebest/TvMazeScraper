@@ -4,5 +4,6 @@ namespace TvMaze.Connector.Configuration
     {
         public string BaseUri { get; set; }
         public int MaxPageAmount { get; set; }
+        public int maxAmountOfShows { get; set; }
     }
 }

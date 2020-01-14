@@ -15,7 +15,6 @@ namespace TvMazeScraper.Services
         private readonly ITvMazeConnector _tvMazeConnector;
         private readonly IMapper _mapper;
         private readonly ApiDbContext _dbContext;
-        private ITvMazeService _tvMazeServiceImplementation;
 
         public TvMazeService(ITvMazeConnector tvMazeConnector, IMapper mapper, ApiDbContext dbContext)
         {
@@ -24,21 +23,15 @@ namespace TvMazeScraper.Services
             _dbContext = dbContext;
         }
 
-        public async Task<List<Models.Show>> Get()
+        public async Task<List<Models.Show>> GetAsync()
         {
-            await Update();  
-            
-            var result = GetTvShowsWithCast();
-
-            if (result.Count < 1)
-            {
-                result = GetTvShowsWithCast();
-            }
+            await Update();
+            var result = GetTvShowsWithCastAsync();
             
             return result;
         }
 
-        private List<Models.Show> GetTvShowsWithCast()
+        private List<Show> GetTvShowsWithCastAsync()
         {
             var dbShows =  _dbContext.Shows.Include(show => show.Cast).ToList();
             var result = _mapper.Map<List<Models.Show>>(dbShows);
@@ -46,33 +39,21 @@ namespace TvMazeScraper.Services
         }
         public async Task Update()
         {
-            var scrapedShows = await _tvMazeConnector.GetShows();
-            var showList = _mapper.Map<List<Models.Show>>(scrapedShows);
+            var scrapedShows = await _tvMazeConnector.GetShowsAsync();
+            var showList = _mapper.Map<List<Show>>(scrapedShows);
 
             var dbShowList = await SaveShows(showList);
 
             foreach (var show in dbShowList)
             {
                 var castMembers = await GetTranslatedCastMembersForShow(show.Id);
-                await SaveCastMembers(castMembers, show.Id);
+                await SaveCastMembersAsync(castMembers, show.Id);
             }
-        }
-
-        private async Task<List<IEnumerable<Models.Show>>> AddCastToShow(List<IEnumerable<Models.Show>> showsList)
-        {
-            foreach (var shows in showsList)
-            {
-                shows.Select(async s => s.Cast.AddRange(
-                    await GetTranslatedCastMembersForShow(s.Id))
-                );
-            }
-
-            return showsList;
         }
 
         private async Task<List<CastMember>> GetTranslatedCastMembersForShow(int showId)
         {
-            var scrapedCastMembersForShow = await _tvMazeConnector.GetCastMembersForShow(showId);
+            var scrapedCastMembersForShow = await _tvMazeConnector.GetCastMembersForShowAsync(showId);
             var castMemberList = _mapper.Map<List<CastMember>>(scrapedCastMembersForShow);
             return castMemberList;
         }
@@ -103,7 +84,7 @@ namespace TvMazeScraper.Services
             return dbShowList;
         }
 
-        private async Task SaveCastMembers(List<CastMember> castMembers, int showId)
+        private async Task SaveCastMembersAsync(List<CastMember> castMembers, int showId)
         {
             foreach (var castMember in castMembers)
             {
@@ -135,7 +116,7 @@ namespace TvMazeScraper.Services
             _dbContext.Update(dbCastMemberEntity);
         }
 
-        private void UpdateShow(ShowEntity dbShow, Models.Show show)
+        private void UpdateShow(ShowEntity dbShow, Show show)
         {
             dbShow.Name = show.Name;
             dbShow.ModifiedAt = DateTime.UtcNow;

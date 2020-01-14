@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="TvMaze.Connector" t="IncludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Configuration" t="Include">
+          <e p="TvMazeOptions.cs" t="Include" />
+        </e>
+        <e p="Extensions" t="Include">
+          <e p="ServiceCollectionExtensions.cs" t="Include" />
+        </e>
+        <e p="ITvMazeConnector.cs" t="Include" />
+        <e p="Models" t="Include">
+          <e p="CastMember" t="Include">
+            <e p="CastMember.cs" t="Include" />
+            <e p="Character.cs" t="Include" />
+            <e p="Person.cs" t="Include" />
+          </e>
+          <e p="Country.cs" t="Include" />
+          <e p="Image.cs" t="Include" />
+          <e p="Show" t="Include">
+            <e p="Network.cs" t="Include" />
+            <e p="Rating.cs" t="Include" />
+            <e p="Show.cs" t="Include" />
+          </e>
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp2.2" t="Include">
+              <e p="TvMaze.Connector.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="TvMaze.Connector.csproj" t="IncludeRecursive" />
+        <e p="TvMazeConnector.cs" t="Include" />
+      </e>
+      <e p="TvMazeScraper" t="IncludeRecursive">
+        <e p="appsettings.Development.json" t="Include" />
+        <e p="appsettings.json" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="Controllers" t="Include">
+          <e p="TvShowsController.cs" t="Include" />
+        </e>
+        <e p="Entities" t="Include">
+          <e p="ApiDbContext.cs" t="Include" />
+          <e p="BaseEntity.cs" t="Include" />
+          <e p="CastMemberEntity.cs" t="Include" />
+          <e p="ShowEntity.cs" t="Include" />
+        </e>
+        <e p="Mappers" t="Include">
+          <e p="MappingProfile.cs" t="Include" />
+        </e>
+        <e p="Migrations" t="Include">
+          <e p="20200113230720_initial.cs" t="Include" />
+          <e p="20200113230720_initial.Designer.cs" t="Include" />
+          <e p="20200113232045_update_id.cs" t="Include" />
+          <e p="20200113232045_update_id.Designer.cs" t="Include" />
+          <e p="20200113233855_remove_guid.cs" t="Include" />
+          <e p="20200113233855_remove_guid.Designer.cs" t="Include" />
+          <e p="20200113235458_nullable_birthday.cs" t="Include" />
+          <e p="20200113235458_nullable_birthday.Designer.cs" t="Include" />
+          <e p="20200114002954_add_fk.cs" t="Include" />
+          <e p="20200114002954_add_fk.Designer.cs" t="Include" />
+          <e p="20200114105347_addids.cs" t="Include" />
+          <e p="20200114105347_addids.Designer.cs" t="Include" />
+          <e p="ApiDbContextModelSnapshot.cs" t="Include" />
+        </e>
+        <e p="Models" t="Include">
+          <e p="CastMember.cs" t="Include" />
+          <e p="Show.cs" t="Include" />
+        </e>
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="TvMazeScraper.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+        <e p="Program.cs" t="Include" />
+        <e p="Properties" t="Include">
+          <e p="launchSettings.json" t="Include" />
+        </e>
+        <e p="Services" t="Include">
+          <e p="ITvMazeService.cs" t="Include" />
+          <e p="TvMazeService.cs" t="Include" />
+        </e>
+        <e p="Startup.cs" t="Include" />
+        <e p="TvMazeScraper.csproj" t="IncludeRecursive" />
+      </e>
+      <e p="TvMazeScraper.sln" t="IncludeFlat" />
+    </e>
+    <e p="$USER_HOME$/Library/Caches/Rider2019.3/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.3/resharper-host/local/Transient/ReSharperHost/v193/SolutionCaches/_TvMazeScraper.-1476590474.00" t="ExcludeRecursive" />
+  </component>
+</project>

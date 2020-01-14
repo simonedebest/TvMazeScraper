@@ -8,7 +8,7 @@ namespace TvMaze.Connector
 {
     public interface ITvMazeConnector
     {
-        Task<List<Show>> GetShows();
-        Task<List<CastMember>> GetCastMembersForShow(int showId);
+        Task<List<Show>> GetShowsAsync();
+        Task<List<CastMember>> GetCastMembersForShowAsync(int showId);
     }
 }

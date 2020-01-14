@@ -6,6 +6,6 @@ namespace TvMazeScraper.Services
 {
     public interface ITvMazeService
     {
-        Task<List<Show>> Get();
+        Task<List<Show>> GetAsync();
     }
 }

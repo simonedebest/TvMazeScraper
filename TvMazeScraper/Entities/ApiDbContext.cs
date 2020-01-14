@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using TvMazeScraper.Models;
 
 namespace TvMazeScraper.Entities
 {

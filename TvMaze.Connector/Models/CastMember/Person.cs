@@ -1,4 +1,3 @@
-using System;
 namespace TvMaze.Connector.Models.CastMember
 {
     public class Person
